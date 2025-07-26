@@ -1,0 +1,33 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
+    - name: Download app-card-delivery.jar
+      run: |
+        mkdir -p artifacts
+        wget -O artifacts/app-card-delivery.jar https://your-link-to-art-card-delivery.jar
+
+    - name: Run application in background
+      run: |
+        nohup java -jar ./artifacts/app-card-delivery.jar &
+
+    - name: Run tests
+      run: ./gradlew test --info -Dselenide.headless=true
