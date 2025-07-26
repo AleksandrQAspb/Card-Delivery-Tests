@@ -20,11 +20,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Download app-card-delivery.jar
-      run: |
-        mkdir -p artifacts
-        wget -O artifacts/app-card-delivery.jar https://your-link-to-art-card-delivery.jar
-
     - name: Run application in background
       run: |
         nohup java -jar ./artifacts/app-card-delivery.jar > app.log 2>&1 &
