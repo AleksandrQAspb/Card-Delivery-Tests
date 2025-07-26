@@ -2,13 +2,13 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,11 @@ jobs:
 
     - name: Run application in background
       run: |
-        nohup java -jar ./artifacts/app-card-delivery.jar &
+        nohup java -jar ./artifacts/app-card-delivery.jar > app.log 2>&1 &
+        sleep 10
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
 
     - name: Run tests
       run: ./gradlew test --info -Dselenide.headless=true
